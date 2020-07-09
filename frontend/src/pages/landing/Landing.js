@@ -45,9 +45,9 @@ const Landing = () => {
               id="room"
               onChange={onChangeHandler}
             >
-              {/* <option disabled selected value>
+              <option disabled selected value>
                 -- select a room --
-              </option> */}
+              </option>
               <option value="JavaScript">D-Mail</option>
               <option value="El Psy Congroo">El Psy Congroo</option>
               <option value="PHP">PHP</option>

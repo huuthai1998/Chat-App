@@ -15,20 +15,38 @@ const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const [typers, setTypers] = useState([]);
   const typersRef = useRef(typers);
+  const [shouldScroll, setShouldScroll] = useState(false);
   const messagesRef = useRef(messages);
   const usersRef = useRef(users);
   const node = useRef(null);
+  const chatDiv = useRef(null);
+  const scrollPos = useRef(null);
   var i1 = { "--i": 1, color: "white" };
   var i2 = { "--i": 2, color: "white" };
   var i3 = { "--i": 3, color: "white" };
   const botName = "Mayushii☆";
 
   useEffect(() => {
-    messagesRef.current = messages;
     usersRef.current = users;
-    typersRef.current = typers;
-    if (node.current !== null) node.current.scrollIntoView();
+    if (
+      node.current !== null &&
+      Math.floor(chatDiv.current.scrollTop) >= scrollPos.current - 4
+    )
+      node.current.scrollIntoView();
+
+    scrollPos.current =
+      chatDiv.current.scrollHeight - chatDiv.current.clientHeight;
   });
+
+  useEffect(() => {
+    messagesRef.current = messages;
+    setShouldScroll(false);
+    if (shouldScroll) node.current.scrollIntoView();
+  }, [messages]);
+
+  useEffect(() => {
+    typersRef.current = typers;
+  }, [typers]);
 
   const onChangeHandler = (e) => {
     socket.emit("typing", user);
@@ -41,6 +59,7 @@ const Chatroom = () => {
     socket.emit("stop typing");
     socket.emit("chat", chatText);
     setChatText("");
+    setShouldScroll(true);
   };
 
   useEffect(() => {
@@ -64,7 +83,6 @@ const Chatroom = () => {
     });
 
     socketIo.on("bubble", (u) => {
-      console.log("user ", u);
       if (typersRef.current.find((e) => e === u) === undefined)
         setTypers([...typersRef.current, u]);
     });
@@ -158,7 +176,7 @@ const Chatroom = () => {
             </span>
             {userList}
           </div>
-          <div className="w-3/4 bg-white p-5 overflow-y-auto">
+          <div className="w-3/4 bg-white p-5 overflow-y-auto" ref={chatDiv}>
             {messageList}
             {typers.length !== 0 && (
               <div
@@ -166,7 +184,7 @@ const Chatroom = () => {
                 ref={node}
               >
                 <p className="text-white text-right mr-2">
-                  {typing} is typing{" "}
+                  {typing} is typing
                   <span className="wavy">
                     <span className="text-white" style={i1}>
                       .
