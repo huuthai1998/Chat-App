@@ -14,9 +14,11 @@ const Landing = () => {
   const submit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    userContext.setUsername(userName);
-    userContext.setRoomName(room);
-    setUserName("");
+    if (userName !== "" && room !== "") {
+      userContext.setUsername(userName);
+      userContext.setRoomName(room);
+      setUserName("");
+    }
   };
 
   return (
@@ -35,19 +37,21 @@ const Landing = () => {
             submit(e);
           }}
         >
-          <div className="flex flex-col sm:flex-row items-baseline justify-between mb-4 w-full">
-            <label className="text-white font-bold text-xl" htmlFor="room">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-4 w-full">
+            <label
+              className="text-white font-bold text-xl mb-2 sm:mb-0"
+              htmlFor="room"
+            >
               Room
             </label>
             <select
-              className="flex-grow ml-4 rounded-md focus:outline-none focus:shadow-outline p-2"
+              className="flex-grow sm:ml-4 rounded-md focus:outline-none focus:shadow-outline p-2"
               name="room"
               id="room"
               onChange={onChangeHandler}
+              required
             >
-              <option disabled selected value>
-                -- select a room --
-              </option>
+              <option value="">-- select a room --</option>
               <option value="JavaScript">D-Mail</option>
               <option value="El Psy Congroo">El Psy Congroo</option>
               <option value="PHP">PHP</option>
@@ -57,13 +61,17 @@ const Landing = () => {
             </select>
           </div>
           <div className="flex flex-col sm:flex-row items-baseline justify-between mb-4 w-full">
-            <label className="text-white  font-bold text-xl" htmlFor="name">
+            <label
+              className="text-white  font-bold text-xl mb-2 sm:mb-0"
+              htmlFor="name"
+            >
               Name
             </label>
             <input
               id="name"
               name="name"
-              className="flex-grow ml-4 p-2 rounded-md focus:outline-none focus:shadow-outline"
+              required
+              className="flex-grow sm:ml-4 p-2 w-full sm:w-auto rounded-md focus:outline-none focus:shadow-outline"
               placeholder="Enter your name"
               onChange={onChangeHandler}
             ></input>

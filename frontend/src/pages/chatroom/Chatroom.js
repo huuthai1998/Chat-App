@@ -7,6 +7,7 @@ const ENDPOINT = "http://localhost:5000";
 const Chatroom = () => {
   const userContext = React.useContext(UserContext);
   //Hooks variables
+  const [showUsers, setShowUsers] = useState(false);
   const [chatText, setChatText] = useState("");
   const [socket, setSocket] = useState(null);
   const [user, setUser] = useState(userContext.user);
@@ -125,13 +126,32 @@ const Chatroom = () => {
       }`}
       ref={key === messages.length - 1 ? node : null}
     >
-      <div>
+      <div className="flex w-full">
         <span className="text-red-200 font-bold">{message.sender}</span>
         <span className="text-white ml-2">{`${message.hour}:${message.minute}`}</span>
       </div>
-      <span className="text-white">{message.content}</span>
+      <span className="text-white break-words">{message.content}</span>
     </div>
   ));
+
+  const typingBubble = (
+    <div className="p-2 rounded mb-4 bg-gray-400 w-1/2 float-right" ref={node}>
+      <p className="text-white text-right mr-2">
+        {typing} is typing
+        <span className="wavy">
+          <span className="text-white" style={i1}>
+            .
+          </span>
+          <span className="text-white" style={i2}>
+            .
+          </span>
+          <span className="text-white" style={i3}>
+            .
+          </span>
+        </span>
+      </p>
+    </div>
+  );
 
   var typing = "";
   typers.map((t, i) => {
@@ -152,8 +172,8 @@ const Chatroom = () => {
   return (
     <div className="min-h-screen bg-blue-500 p-8">
       <main className="container mx-auto max-w-6xl">
-        <div className="flex flex-col sm:flex-row bg-red-500 p-6 justify-between rounded">
-          <p className="text-left text-xl text-white font-extrabold">
+        <div className="flex flex-col sm:flex-row bg-red-500 p-4 sm:p-6 justify-between rounded">
+          <p className="text-left text-xl text-white font-extrabold mb-4 sm:mb-0">
             {`Room: ${userContext.room}`}
           </p>
           <button
@@ -169,40 +189,31 @@ const Chatroom = () => {
             Leave session
           </button>
         </div>
-        <div className="flex flex-col sm:flex-row justify-between h-23-screen">
-          <div className="w-1/4 bg-red-200 p-6 overflow-y-auto">
+        <div className="flex flex-col sm:flex-row sm:justify-between h-23-screen">
+          <div className="sm:w-1/4 w-full  bg-red-200 p-6 overflow-y-auto">
             <span className="text-blue-600 font-bold text-xl">
               <i className="fa fa-user" aria-hidden="true"></i> Users
             </span>
-            {userList}
+            <button
+              className="float-right sm:hidden"
+              onClick={() => setShowUsers(!showUsers)}
+            >
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div className={`sm:hidden ${showUsers ? "block" : "hidden"}`}>
+              {userList}
+            </div>
           </div>
-          <div className="w-3/4 bg-white p-5 overflow-y-auto" ref={chatDiv}>
+          <div
+            className="sm:w-3/4 w-full bg-white p-5 overflow-y-auto h-23-screen sm:h-auto"
+            ref={chatDiv}
+          >
             {messageList}
-            {typers.length !== 0 && (
-              <div
-                className="p-2 rounded mb-4 bg-gray-400 w-1/2 float-right"
-                ref={node}
-              >
-                <p className="text-white text-right mr-2">
-                  {typing} is typing
-                  <span className="wavy">
-                    <span className="text-white" style={i1}>
-                      .
-                    </span>
-                    <span className="text-white" style={i2}>
-                      .
-                    </span>
-                    <span className="text-white" style={i3}>
-                      .
-                    </span>
-                  </span>
-                </p>
-              </div>
-            )}
+            {typers.length !== 0 && typingBubble}
           </div>
         </div>
         <form
-          className="flex flex-col sm:flex-row bg-red-500 p-6 space-between  rounded"
+          className="flex bg-red-500 p-4 sm:p-6 space-between rounded"
           onSubmit={(e) => {
             onSent(e);
           }}
@@ -218,13 +229,13 @@ const Chatroom = () => {
           ></input>
           <button
             type="submit"
-            className="ml-4 bg-blue-400 text-white font-bold py-2 px-4 rounded-md 
+            className="flex sm:flex-row flex-col ml-4 bg-blue-400 text-white font-bold py-2 px-4 rounded-md 
               focus:outline-none focus:shadow-outline hover:bg-blue-500"
           >
             <span>
-              <i className="far fa-paper-plane mr-2"></i>
+              <i className="far fa-paper-plane sm:mr-2"></i>
             </span>
-            SEND
+            <p className="hidden sm:block">SEND</p>
           </button>
         </form>
       </main>
