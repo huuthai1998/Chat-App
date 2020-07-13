@@ -134,6 +134,15 @@ const Chatroom = () => {
     </div>
   ));
 
+  var typing = "";
+  typers.map((t, i) => {
+    if (t !== undefined) {
+      if (i !== typers.length - 1) typing += `${t}, `;
+      else typing += t;
+    }
+    console.log(typing);
+  });
+
   const typingBubble = (
     <div className="p-2 rounded mb-4 bg-gray-400 w-1/2 float-right" ref={node}>
       <p className="text-white text-right mr-2">
@@ -152,14 +161,6 @@ const Chatroom = () => {
       </p>
     </div>
   );
-
-  var typing = "";
-  typers.map((t, i) => {
-    if (t !== undefined) {
-      if (i !== typers.length - 1) typing += `${t}, `;
-      else typing += t;
-    }
-  });
 
   const userList = users.map((user, key) => {
     return (
