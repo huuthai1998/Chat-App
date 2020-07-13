@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { UserContext } from "../../App";
 import io from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://chat-app-reactjs-nodejs.herokuapp.com/";
 
 const Chatroom = () => {
   const userContext = React.useContext(UserContext);
@@ -25,7 +25,7 @@ const Chatroom = () => {
   var i1 = { "--i": 1, color: "white" };
   var i2 = { "--i": 2, color: "white" };
   var i3 = { "--i": 3, color: "white" };
-  const botName = "Mayushii☆";
+  const botName = "Bot Mayushii☆";
 
   useEffect(() => {
     usersRef.current = users;
@@ -194,11 +194,12 @@ const Chatroom = () => {
             <span className="text-blue-600 font-bold text-xl">
               <i className="fa fa-user" aria-hidden="true"></i> Users
             </span>
+            <div className="hidden sm:block">{userList}</div>
             <button
               className="float-right sm:hidden"
               onClick={() => setShowUsers(!showUsers)}
             >
-              <i class="fa fa-bars" aria-hidden="true"></i>
+              <i className="fa fa-bars" aria-hidden="true"></i>
             </button>
             <div className={`sm:hidden ${showUsers ? "block" : "hidden"}`}>
               {userList}

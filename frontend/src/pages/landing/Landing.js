@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { UserContext } from "../../App";
 
 const Landing = () => {
@@ -52,12 +52,12 @@ const Landing = () => {
               required
             >
               <option value="">-- select a room --</option>
-              <option value="JavaScript">D-Mail</option>
-              <option value="El Psy Congroo">El Psy Congroo</option>
-              <option value="PHP">PHP</option>
-              <option value="C#">C#</option>
-              <option value="Ruby">Ruby</option>
-              <option value="Java">Java</option>
+              <option value="D-Mail">D-Mail</option>
+              <option value="Time Machine">Time Machine</option>
+              <option value="Okabe Rintaro">Okabe Rintaro</option>
+              <option value="Makise Kurisu">Makise Kurisu</option>
+              <option value="Steins;Gate">Steins;Gate</option>
+              <option value="Steins;Gate 0">Steins;Gate 0</option>
             </select>
           </div>
           <div className="flex flex-col sm:flex-row items-baseline justify-between mb-4 w-full">

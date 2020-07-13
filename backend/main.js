@@ -8,6 +8,7 @@ var app = require("./app");
 var debug = require("debug")("backend:server");
 var http = require("http");
 var socketio = require("socket.io");
+var cors = require("cors");
 var {
   userJoin,
   getUser,
@@ -21,7 +22,7 @@ var {
 
 var port = normalizePort(process.env.PORT || "5000");
 app.set("port", port);
-
+app.use(cors());
 /**
  * Create HTTP server.
  */
@@ -61,8 +62,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("dc", socket.id);
-
     user = getUser(socket.id);
     var username = user.username;
     var room = user.room;
