@@ -5,7 +5,8 @@ The app is able to:
 - Allow user to choose their own username and room
 - Keep track and display list of users in the current room
 - Let user send message to other users in the chosen room
-- Notify user when other users are typing, joining and leaving.
+- Notify user when other users are typing, joining and leaving
+-  Automatically scroll to the newest message
 
 # Built With
 ReactJS - Front-end framework. 
