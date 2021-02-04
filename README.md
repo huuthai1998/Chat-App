@@ -1,6 +1,8 @@
 # Chat-App
 A chat app that is built by ReactJS and NodeJS. The app is compatible with phone, tablet, pc, etc. 
 
+# Link: https://chat-app-4f79d.web.app/
+
 The app is able to:
 - Allow user to choose their own username and room
 - Keep track and display list of users in the current room
